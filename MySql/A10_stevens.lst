@@ -1,0 +1,318 @@
+--------------
+/* Jared Stevens */
+
+    /* enable warnings! */
+
+use   a_bkorders
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+/*  TASK 00 */ 
+select user(), current_date(), version(), @@sql_mode
+--------------
+
+*************************** 1. row ***************************
+        user(): jared@localhost
+current_date(): 2015-11-03
+     version(): 5.6.26-log
+    @@sql_mode: STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 01 */
+
+select distinct book_id as "Book ID"
+, title as "Book Title SQL or DB"
+from a_bkinfo.books
+where book_id in(
+	select book_id
+	from a_bkorders.order_details
+) and book_id in(
+	select book_id
+	from a_bkinfo.book_topics
+	where topic_id in('DB', 'SQL')
+) order by book_id
+--------------
+
++---------+-----------------------------------------+
+| Book ID | Book Title SQL or DB                    |
++---------+-----------------------------------------+
+|    1105 | SQL:1999 Relational Language Concepts   |
+|    1106 | SQL for Smarties                        |
+|    1107 | SQL Puzzles and Answers                 |
+|    1108 | Database Systems                        |
+|    1109 | Intro to DB Systems-7th Ed              |
+|    1110 | Adv SQL:1999 Object_Relational Features |
+|    1128 | Temporal Data and the Relational Model  |
+|    1142 | Relational Database Theory              |
+|    1161 | SQL Programming Style                   |
+|    1162 | Trees and Hierarchies                   |
+|    1175 | MySQL in a Nutshell                     |
+|    1180 | MySQL Database Design and Tuning        |
+|    1182 | MySQL Cookbook                          |
+|    1184 | MySQL Developer's Library               |
+|    1185 | MySQL Stored Procedures                 |
+|    1188 | SQL for MySQL Developers                |
+|    1278 | Beginning VB 2008 Databases             |
+|    1306 | Myths of SQL                            |
+|    1483 | Programming with XML                    |
+|    2002 | SQL Server 2005 A Beginner's Guide      |
+|    2004 | SQL Server 2005 Stored Procedure Prg    |
+|    2005 | Developer's Guide to SQL Server 2005    |
+|    2006 | T_SQL Programming (Inside series)       |
+|    2007 | T_SQL Querying (Inside series)          |
+|    2008 | SQL Server 2005 T_Sql Recipies          |
+|    2009 | SQL Server 2005 Express Edition         |
+|    2018 | Oracle Database 11g SQL                 |
+|    2025 | Oracle SQL Fundamentals I Exam Guide    |
+|    2032 | Oracle and the rest of the world        |
++---------+-----------------------------------------+
+29 rows in set (0.00 sec)
+
+--------------
+/*  TASK 02 */
+
+select distinct book_id as "Book ID"
+, title as "Book Title SQL & DB"
+from a_bkinfo.books
+where book_id in(
+	select book_id
+	from a_bkorders.order_details
+) and book_id in(
+	select book_id
+	from a_bkinfo.book_topics
+	where topic_id in('DB')
+	and book_id in(
+		select book_id
+		from a_bkinfo.book_topics
+		where topic_id in('SQL')
+	)
+) order by book_id
+--------------
+
++---------+-----------------------------------------+
+| Book ID | Book Title SQL & DB                     |
++---------+-----------------------------------------+
+|    1105 | SQL:1999 Relational Language Concepts   |
+|    1110 | Adv SQL:1999 Object_Relational Features |
+|    1128 | Temporal Data and the Relational Model  |
++---------+-----------------------------------------+
+3 rows in set (0.00 sec)
+
+--------------
+/*  TASK 03 */
+
+select distinct book_id as "Book ID"
+, title as "Book Title SQL only"
+from a_bkinfo.books
+where book_id in(
+	select book_id
+	from a_bkorders.order_details
+) and book_id in(
+	select book_id
+	from a_bkinfo.book_topics
+	where topic_id not in('DB')
+	and book_id in(
+		select book_id
+		from a_bkinfo.book_topics
+		where topic_id in('SQL')
+	)
+) order by book_id
+--------------
+
++---------+-----------------------------------------+
+| Book ID | Book Title SQL only                     |
++---------+-----------------------------------------+
+|    1105 | SQL:1999 Relational Language Concepts   |
+|    1106 | SQL for Smarties                        |
+|    1107 | SQL Puzzles and Answers                 |
+|    1110 | Adv SQL:1999 Object_Relational Features |
+|    1128 | Temporal Data and the Relational Model  |
+|    1161 | SQL Programming Style                   |
+|    1162 | Trees and Hierarchies                   |
+|    1175 | MySQL in a Nutshell                     |
+|    1182 | MySQL Cookbook                          |
+|    1184 | MySQL Developer's Library               |
+|    1185 | MySQL Stored Procedures                 |
+|    1188 | SQL for MySQL Developers                |
+|    1306 | Myths of SQL                            |
+|    1483 | Programming with XML                    |
+|    2002 | SQL Server 2005 A Beginner's Guide      |
+|    2004 | SQL Server 2005 Stored Procedure Prg    |
+|    2005 | Developer's Guide to SQL Server 2005    |
+|    2006 | T_SQL Programming (Inside series)       |
+|    2007 | T_SQL Querying (Inside series)          |
+|    2008 | SQL Server 2005 T_Sql Recipies          |
+|    2009 | SQL Server 2005 Express Edition         |
+|    2018 | Oracle Database 11g SQL                 |
+|    2025 | Oracle SQL Fundamentals I Exam Guide    |
++---------+-----------------------------------------+
+23 rows in set (0.00 sec)
+
+--------------
+/*  TASK 04 */
+
+select book_id as "Book ID"
+, title as "Book Title"
+, year_publd as "Year Published"
+from a_bkinfo.books
+where book_id in (
+	select book_id
+	from(
+		select book_id
+		, sum(order_price * quantity) as "Total"
+			from a_bkorders.order_details
+			group by book_id
+			order by Total desc limit 1)total 
+	)
+--------------
+
++---------+----------------------------------------+----------------+
+| Book ID | Book Title                             | Year Published |
++---------+----------------------------------------+----------------+
+|    1128 | Temporal Data and the Relational Model |           2003 |
++---------+----------------------------------------+----------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 05 */
+
+select cust_id as "Cust ID"
+, cust_name_last as "Last Name"
+from a_bkorders.customers
+where cust_id in(
+	select cust_id
+		from a_bkorders.order_headers
+		where order_id in(
+			select order_id
+			from a_bkorders.order_details
+			where book_id in(
+				select book_id
+				from a_bkinfo.book_topics
+				where topic_id in('ART')))
+		and year(order_date) = year(current_date)
+)
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+select cust_id as "Cust ID"
+, cust_name_last as "Last Name"
+from a_bkorders.customers
+where cust_id in(
+	select cust_id
+		from a_bkorders.order_headers
+		where order_id in(
+			select order_id
+			from a_bkorders.order_details
+			where book_id in(
+				select book_id
+				from a_bkinfo.book_topics
+				where topic_id in('HIST')))
+		and year(order_date) = year(current_date)
+)
+--------------
+
++---------+--------------+
+| Cust ID | Last Name    |
++---------+--------------+
+|  212921 | Books on Tap |
+|  217796 | Anders       |
+|  218709 | Bonnard      |
+|  234138 | Keats        |
+|  276381 | Collins      |
++---------+--------------+
+5 rows in set (0.00 sec)
+
+--------------
+/*  TASK 06 */
+
+select book_id as "Book ID"
+, title as "Book Title"
+from a_bkinfo.books
+where book_id in(
+	select book_id
+	from (select book_id
+		, sum(quantity) as "Quantity"
+		from a_bkorders.order_details
+		group by book_id)totquan
+	where Quantity > 500
+)
+--------------
+
++---------+------------------------------------------------+
+| Book ID | Book Title                                     |
++---------+------------------------------------------------+
+|    1103 | Selected Poems                                 |
+|    1108 | Database Systems                               |
+|    1128 | Temporal Data and the Relational Model         |
+|    1142 | Relational Database Theory                     |
+|    1305 | Journeys Through Flatland                      |
+|    1401 | Visual Studio Tools for Office                 |
+|    1448 | Backyard Birdsong Guide: Western North America |
+|    1602 | Goblin Market and Other Poems                  |
+|    2001 | Programming SQL Server 2005                    |
+|    2025 | Oracle SQL Fundamentals I Exam Guide           |
++---------+------------------------------------------------+
+10 rows in set (0.00 sec)
+
+--------------
+/*  TASK 07 */
+
+select dates as "Fewest orders"
+from(
+	select min(counted) as "small"
+	, dates
+	from(
+		select count(order_id) as "counted"
+		, date_format(order_date, '%M %Y') as "Dates"
+		from a_bkorders.order_headers
+		group by date_format(order_date, '%m %y')
+		order by counted)counts
+)las
+--------------
+
++---------------+
+| Fewest orders |
++---------------+
+| August 2015   |
++---------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 08 */
+
+select dates as "Fewest orders"
+from(
+	select (counted)  
+	, dates
+	from(
+		select count(order_id) as "counted"
+		, date_format(order_date, '%M %Y') as "Dates"
+		from a_bkorders.order_headers
+		group by date_format(order_date, '%m %y')
+		order by counted desc)counts
+	limit 1
+)las
+--------------
+
++---------------+
+| Fewest orders |
++---------------+
+| March 2015    |
++---------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 09 */
+
+
+/*  TASK 10 */
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+Bye

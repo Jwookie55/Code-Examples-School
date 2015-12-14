@@ -1,0 +1,254 @@
+--------------
+/* Jared Stevens */
+
+    /* enable warnings! */
+
+use   a_testbed
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+/*  TASK 00 */ 
+select user(), current_date(), version(), @@sql_mode
+--------------
+
+*************************** 1. row ***************************
+        user(): jared@localhost
+current_date(): 2015-12-02
+     version(): 5.6.26-log
+    @@sql_mode: STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+1 row in set (0.00 sec)
+
+--------------
+/* FUNCTION 1 */
+
+Drop function if exists a_testbed.booksize
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+create function a_testbed.bookSize(
+	size_in   int)
+	returns varchar(75)
+begin
+	declare v_length varchar(75);
+	if(size_in between 1 and 200) then set v_length := "Short";
+	elseif(size_in between 201 and 500) then set v_length := "Medium";
+	elseif(size_in between 501 and 1200) then set v_length := "Long";
+	elseif(size_in between 1201 and 4000) then set v_length := "Extra Long";
+	elseif(size_in > 4000) then set v_length := "Super Long";
+	elseif(size_in <= 0) then set v_length := "Input value must be a strictly positive value";
+	elseif(size_in is null) then set v_length := "Input value is missing";
+	end if;
+	return v_length;
+end;
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+/* FUNCTION 2 */
+
+Drop function if exists a_testbed.PrevMonth
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+create function a_testbed.PrevMonth(
+	in_date date
+	, in_mn_adjust int)
+	returns varchar(75)
+begin
+	declare v_adjust date; 
+	declare v_useDate date;
+	if(in_date is null) then set v_adjust := date_sub(current_date(), interval in_mn_adjust month);
+	else set v_adjust := date_sub(in_date, interval in_mn_adjust month);
+	end if;
+	if(in_mn_adjust < 0) then set v_adjust := null;
+	end if;
+	return date_format(v_adjust, '%Y-%m');
+end;
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+	
+
+/*  TASK 01 */
+
+select testrun, pagecount, actual, expected
+from(
+	select testrun, pagecount, a_testbed.booksize(pagecount) as actual, expected
+	from(
+		select 1 as testrun, null as pagecount, "Input value missing" as expected union all
+		select 2, 0, "Input value must be a strictly positive value" union all
+		select 3, 200, "Short" union all
+		select 4, 201, "Medium" union all
+		select 5, 500, "Medium" union all
+		select 6, 501, "Long" union all
+		select 7, 1200, "Long" union all
+		select 8, 1201, "Extra Long" union all
+		select 9, 4000, "Extra Long" union all
+		select 10, 4001, "Super Long" union all
+		select 11, -150, "Input value must be a strictly positive value"
+	)myTestData
+)calcData
+--------------
+
++---------+-----------+-----------------------------------------------+-----------------------------------------------+
+| testrun | pagecount | actual                                        | expected                                      |
++---------+-----------+-----------------------------------------------+-----------------------------------------------+
+|       1 |      NULL | Input value is missing                        | Input value missing                           |
+|       2 |         0 | Input value must be a strictly positive value | Input value must be a strictly positive value |
+|       3 |       200 | Short                                         | Short                                         |
+|       4 |       201 | Medium                                        | Medium                                        |
+|       5 |       500 | Medium                                        | Medium                                        |
+|       6 |       501 | Long                                          | Long                                          |
+|       7 |      1200 | Long                                          | Long                                          |
+|       8 |      1201 | Extra Long                                    | Extra Long                                    |
+|       9 |      4000 | Extra Long                                    | Extra Long                                    |
+|      10 |      4001 | Super Long                                    | Super Long                                    |
+|      11 |      -150 | Input value must be a strictly positive value | Input value must be a strictly positive value |
++---------+-----------+-----------------------------------------------+-----------------------------------------------+
+11 rows in set (0.00 sec)
+
+--------------
+/*  TASK 02 */
+
+select testrun, date_in, month_in, actual, expected
+, case(strcmp(coalesce(actual, '1'), coalesce(expected, '1')))
+	when 0 then 'PASS'
+	else '**FAIL**'
+	end as "Status"
+from(
+	select testrun, date_in, month_in, a_testbed.PrevMonth(date_in, month_in) as actual, expected
+	from(
+		select 1 as testrun, null as date_in, 0 as month_in, '2015-12' as expected union all
+		select 2, '2015-12-01', null, null union all
+		select 3,'2012-12-12', 10, '2012-02' union all
+		select 4, '2012-12-12', 0, '2012-12' union all
+		select 5, '2012-12-12', 14, '2011-10' union all
+		select 6, '2012-12-12', -2, null union all
+		select 7, '2012-12-12', 24, '2010-12'
+	)myTestData
+)calcData
+--------------
+
++---------+------------+----------+---------+----------+--------+
+| testrun | date_in    | month_in | actual  | expected | Status |
++---------+------------+----------+---------+----------+--------+
+|       1 | NULL       |        0 | 2015-12 | 2015-12  | PASS   |
+|       2 | 2015-12-01 |     NULL | NULL    | NULL     | PASS   |
+|       3 | 2012-12-12 |       10 | 2012-02 | 2012-02  | PASS   |
+|       4 | 2012-12-12 |        0 | 2012-12 | 2012-12  | PASS   |
+|       5 | 2012-12-12 |       14 | 2011-10 | 2011-10  | PASS   |
+|       6 | 2012-12-12 |       -2 | NULL    | NULL     | PASS   |
+|       7 | 2012-12-12 |       24 | 2010-12 | 2010-12  | PASS   |
++---------+------------+----------+---------+----------+--------+
+7 rows in set (0.00 sec)
+
+--------------
+/*  TASK 03 */
+
+select BookSize
+, count(NumBooks) as "NumBooks"
+from(
+select a_testbed.BookSize(page_count) as "BookSize"
+, 1 as "NumBooks"
+from a_bkinfo.books
+where page_count is not null
+and page_count > 0
+)tbl1
+group by BookSize desc
+--------------
+
++------------+----------+
+| BookSize   | NumBooks |
++------------+----------+
+| Short      |       14 |
+| Medium     |       43 |
+| Long       |       32 |
+| Extra Long |        3 |
++------------+----------+
+4 rows in set (0.00 sec)
+
+--------------
+/*  TASK 04 */
+
+select BookSize
+, count(NumBooks) as "NumBooks"
+from(
+select a_testbed.BookSize(page_count) as "BookSize"
+, 1 as "NumBooks"
+from a_bkinfo.books
+where page_count is not null
+and page_count > 0
+)tbl1
+group by BookSize desc
+union
+select BookSize, 0
+from(
+	select 'Short' as BookSize union all
+	select 'Medium' union all
+	select 'Long' union all
+	select 'Extra Long' union all
+	select 'Super Long'
+)tbl2 where BookSize not in(
+	select bookSize
+	from(
+		select a_testbed.BookSize(page_count) as "BookSize"
+		from a_bkinfo.books
+	)tbl3
+)
+--------------
+
++------------+----------+
+| BookSize   | NumBooks |
++------------+----------+
+| Short      |       14 |
+| Medium     |       43 |
+| Long       |       32 |
+| Extra Long |        3 |
+| Super Long |        0 |
++------------+----------+
+5 rows in set (0.02 sec)
+
+--------------
+/*  TASK 05 */
+
+select count(order_id) as "Number of Orders"
+, count(distinct cust_id) as "Number of Custumers With Orders"
+from a_bkorders.order_headers
+where date_format(order_date, '%Y-%m') in(a_testbed.PrevMonth(current_date(), 2), a_testbed.PrevMonth(current_date(), 1))
+--------------
+
++------------------+---------------------------------+
+| Number of Orders | Number of Custumers With Orders |
++------------------+---------------------------------+
+|                5 |                               3 |
++------------------+---------------------------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 06 */
+
+
+/*  TASK 07 */
+
+
+/*  TASK 08 */
+
+
+/*  TASK 09 */
+
+
+/*  TASK 10 */
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+Bye

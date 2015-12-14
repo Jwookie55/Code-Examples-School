@@ -1,0 +1,271 @@
+--------------
+/* Jared Stevens */
+
+    /* enable warnings! */
+
+use   a_vets
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+/*  TASK 00 */ 
+select user(), current_date(), version(), @@sql_mode
+--------------
+
+*************************** 1. row ***************************
+        user(): jared@localhost
+current_date(): 2015-10-20
+     version(): 5.6.26-log
+    @@sql_mode: STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 01 */
+
+select count(eh.ex_id) as "Number of Exams"
+, sum(ed.ex_fee) as "Total Fees"
+from a_vets.vt_exam_headers eh
+join a_vets.vt_exam_details ed using(ex_id)
+where an_id in (16003, 21205)
+group by an_id
+--------------
+
++-----------------+------------+
+| Number of Exams | Total Fees |
++-----------------+------------+
+|              12 |     899.46 |
++-----------------+------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 02 */
+
+select count(eh.ex_id) as "Number Of Exams"
+from a_vets.vt_exam_headers eh 
+left join a_vets.vt_animals an using(an_id)
+where an_type in('dormouse', 'hamster', 'hedgehog', 'porcupine', 'olinguito' )
+and year(ex_date) = (year(current_date)-1)
+--------------
+
++-----------------+
+| Number Of Exams |
++-----------------+
+|               5 |
++-----------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 03 */
+
+select cl.cl_id as "Client ID"
+, cl.cl_name_last as "Client Name"
+, count(an_id) as "Number of Animals"
+, count(case when an_type in('dormouse', 'hamster', 'hedgehog', 'porcupine', 'olinguito' ) 
+then 1 else null end) as "Number of Rodents"
+from a_vets.vt_clients cl
+left join a_vets.vt_animals an using(cl_id)
+group by cl_id
+--------------
+
++-----------+-------------+-------------------+-------------------+
+| Client ID | Client Name | Number of Animals | Number of Rodents |
++-----------+-------------+-------------------+-------------------+
+|       411 | Carter      |                 5 |                 1 |
+|      1825 | Harris      |                 7 |                 4 |
+|      1852 | Dalrymple   |                 8 |                 2 |
+|      3423 | Hawkins     |                 0 |                 0 |
+|      3560 | Monk        |                 3 |                 1 |
+|      4534 | Montgomery  |                 3 |                 0 |
+|      5686 | Biederbecke |                 0 |                 0 |
+|      5689 | Biederbecke |                 1 |                 0 |
+|      5698 | Biederbecke |                 0 |                 0 |
+|      5699 | Biederbecke |                 5 |                 1 |
+|      6897 | Drake       |                 1 |                 0 |
+|      7152 | Brubeck     |                 2 |                 0 |
+|      7212 | Davis       |                 0 |                 0 |
+|     25479 | Boston      |                 0 |                 0 |
+|    408763 | Turrentine  |                 3 |                 0 |
++-----------+-------------+-------------------+-------------------+
+15 rows in set (0.00 sec)
+
+--------------
+/*  TASK 04 */
+
+select
+count(ex_id) as "Number of Exams"
+, count(distinct an_id) as "Number of animals with Exams"
+from a_vets.vt_exam_headers
+--------------
+
++-----------------+------------------------------+
+| Number of Exams | Number of animals with Exams |
++-----------------+------------------------------+
+|              39 |                           15 |
++-----------------+------------------------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 05 */
+
+select cl_id
+, cl_name_last
+from a_vets.vt_clients
+where cl_id = (
+select cl_id
+from (select cl_id
+, max(total)
+from (
+select cl_id
+, sum(ex_fee) as "total"
+from a_vets.vt_animals an
+left join a_vets.vt_exam_headers eh using(an_id)
+left join a_vets.vt_exam_details ed using(ex_id)
+group by cl_id)total
+)HighId)
+--------------
+
++-------+--------------+
+| cl_id | cl_name_last |
++-------+--------------+
+|   411 | Carter       |
++-------+--------------+
+1 row in set (0.00 sec)
+
+--------------
+/*  TASK 06 */
+
+select
+sum(case when an_type = 'cat' then 1 else null end) as "Cats"
+,sum(case when an_type = 'dog' then 1 else null end) as "Dogs"
+,sum(case when an_type in ('dormouse', 'hamster', 'hedgehog', 'porcupine', 'olinguito' ) then 1 else null end) as "rodents"
+,sum(case when an_type in ('lizard', 'chelonian', 'snake', 'bird') then 1 else null end) as "Reptiles"
+,count(an_id) as "All Animals"
+from a_vets.vt_animals
+--------------
+
++------+------+---------+----------+-------------+
+| Cats | Dogs | rodents | Reptiles | All Animals |
++------+------+---------+----------+-------------+
+|    8 |    9 |       9 |       12 |          38 |
++------+------+---------+----------+-------------+
+1 row in set (0.00 sec)
+
+--------------
+ 
+
+/*  TASK 07 */
+
+select cl_id
+, cl_name_last
+from a_vets.vt_clients
+where cl_id in (
+	select cl_id 
+	from (
+	select cl_id
+	, sum(case when an_id then 1 else 0 end) as "NumAn"
+	from a_vets.vt_clients cl
+	left join a_vets.vt_animals an using(cl_id)
+	group by cl_id)total
+	where NumAn = 1)
+--------------
+
++-------+--------------+
+| cl_id | cl_name_last |
++-------+--------------+
+|  5689 | Biederbecke  |
+|  6897 | Drake        |
++-------+--------------+
+2 rows in set (0.00 sec)
+
+--------------
+/*  TASK 08 */
+
+select an.an_id as "Animal ID"
+, an.an_type
+, an.an_name
+, coalesce(max(ex_date), "No Exams") as "Most Recent Exam"
+from a_vets.vt_animals an
+left join a_vets.vt_exam_headers eh using(an_id)
+group by an_id
+--------------
+
++-----------+-----------+-----------------+---------------------+
+| Animal ID | an_type   | an_name         | Most Recent Exam    |
++-----------+-----------+-----------------+---------------------+
+|     10002 | cat       | Gutsy           | No Exams            |
+|     11015 | bird      | Kenny           | No Exams            |
+|     11025 | bird      | NULL            | No Exams            |
+|     11029 | bird      | NULL            | No Exams            |
+|     12035 | bird      | Mr Peanut       | 2015-01-09 16:30:00 |
+|     12038 | porcupine | Gutsy           | No Exams            |
+|     15001 | chelonian | Big Mike        | 2015-01-31 09:00:00 |
+|     15002 | chelonian | George          | 2015-08-10 10:45:00 |
+|     15165 | dog       | Burgess         | No Exams            |
+|     15401 | lizard    | Pinkie          | 2014-11-06 10:30:00 |
+|     16002 | porcupine | Fritz           | 2015-09-03 14:30:00 |
+|     16003 | cat       | Ursula          | 2015-01-01 16:30:00 |
+|     16004 | cat       | Napper          | No Exams            |
+|     16043 | dog       | Ursula          | No Exams            |
+|     16044 | dog       | Triton          | No Exams            |
+|     17002 | porcupine | Fritzchen       | 2014-10-10 09:15:00 |
+|     17025 | lizard    | 25              | 2015-02-25 10:45:00 |
+|     17026 | lizard    | 3P#_26          | 2015-01-15 10:45:00 |
+|     17027 | lizard    | 3P#_25          | 2014-12-27 10:45:00 |
+|     19845 | dog       | Pinkie          | 2014-11-22 09:00:00 |
+|     21001 | hedgehog  | Yoggie          | 2015-08-23 10:30:00 |
+|     21002 | hedgehog  | Edger           | No Exams            |
+|     21003 | dog       | Calvin Coolidge | 2014-12-26 09:30:00 |
+|     21004 | snake     | Gutsy           | No Exams            |
+|     21005 | dormouse  | Koshka          | 2014-12-31 13:00:00 |
+|     21006 | hamster   | Koshka          | No Exams            |
+|     21007 | snake     | NULL            | No Exams            |
+|     21205 | dog       | Manfried        | No Exams            |
+|     21305 | dog       | Spot            | No Exams            |
+|     21306 | dog       | Shadow          | No Exams            |
+|     21307 | dog       | Buddy           | No Exams            |
+|     21314 | cat       | Adalwine        | No Exams            |
+|     21315 | cat       | Baldric         | No Exams            |
+|     21316 | cat       | Etta            | No Exams            |
+|     21317 | cat       | Manfried        | 2015-07-23 08:30:00 |
+|     21318 | cat       | Waldrom         | No Exams            |
+|     21320 | olinguito | Morris          | No Exams            |
+|     21321 | olinguito | Morton          | No Exams            |
++-----------+-----------+-----------------+---------------------+
+38 rows in set (0.00 sec)
+
+--------------
+/*  TASK 09 */
+select an.an_id
+, an.an_type
+, an.an_name
+, an.cl_id
+, cl.cl_phone
+from a_vets.vt_animals an
+left join a_vets.vt_clients cl using(cl_id)
+where an_id in(
+select an_id 
+from(
+select an_id
+from a_vets.vt_exam_details
+right join a_vets.vt_exam_headers using(ex_id)
+where ex_fee > 150
+and year(ex_date) not in (year(current_date)))fee)
+--------------
+
++-------+----------+---------+-------+--------------+
+| an_id | an_type  | an_name | cl_id | cl_phone     |
++-------+----------+---------+-------+--------------+
+| 16003 | cat      | Ursula  |  1825 | NULL         |
+| 17026 | lizard   | 3P#_26  |  7152 | 258.257.2727 |
+| 21005 | dormouse | Koshka  |  1825 | NULL         |
++-------+----------+---------+-------+--------------+
+3 rows in set (0.00 sec)
+
+--------------
+/*  TASK 10 */
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+Bye
