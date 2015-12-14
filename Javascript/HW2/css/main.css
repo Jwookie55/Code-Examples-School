@@ -1,0 +1,131 @@
+/***********
+General
+***********/
+
+body {
+	text-align: center;
+    font-family: open sans, sans-serif;
+}
+
+body ul {
+	margin: 15px;
+}
+#wrapper {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%
+}
+
+section ul {
+	list-style: none;	
+}
+
+
+
+/***********
+Heading
+***********/
+
+
+header {
+	text-align: center;
+    margin: 0 0 30px 0;
+    padding: 5px 0 0 0;
+    width: 100%
+}
+
+h1 {
+  font-family: 'Niconne', sans-serif;
+  margin: 15px 0;
+  font-size: 3.5em;
+  font-weight: normal;
+  line-height: .8em;
+}
+
+
+/***********
+Navigation
+***********/
+
+nav {
+  text-align: center;
+  padding-top: 10px;
+  margin: 10px 0 0;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0 10px;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  font-weight: 800;
+  padding: 15px 10px;
+}
+
+/***********
+Footer
+***********/
+
+footer {
+  font-size: 1em;
+  text-align: center;
+  clear: both;
+  padding-top: 50px;
+  color: #fff;
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+}
+
+/***********
+Colors
+***********/
+
+/* grey background, white letters */
+body {
+  background: #0086B3;
+  color: #000;
+}
+
+/* black header */
+header {
+  background: #000;
+  border-color: #599a68;
+}
+
+/* blue headline */
+h1{
+  color: #0af;
+}
+
+/* black anchors */
+a { 
+  color: #0fa;
+}
+
+/* blue links */
+nav a{
+  color: #0af;
+}
+
+@media print {
+		a{text-decoration: none;}
+		a::after{content:"(href)"}
+}

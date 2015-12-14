@@ -1,0 +1,26 @@
+/**************
+HW pages
+**************/
+
+#hw2link a{
+	color: #000000
+}
+#under h1, h2{
+		margin: 15px 0;
+		text-align: center;
+		color: #26FF5C
+}
+#construction{
+	background: #0086B3	
+}
+	
+#construction nav ul{
+	margin: 20px 0;
+	list-style: none;
+	text-align: center;
+	color: #000000;
+}
+
+section ul li{ 
+	font-size: larger;
+}

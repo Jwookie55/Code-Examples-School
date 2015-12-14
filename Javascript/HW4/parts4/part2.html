@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CNIT 133 HW4</title>
+		<link rel="stylesheet" href="../css/normalize.css">
+		<link href='http://fonts.googleapis.com/css?family=Niconne|Open+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../css/HW4.css">
+		<script src="part2.js"></script>
+	</head>
+	<body id="construction">
+		<header id="under">
+			<h1>CNIT 133 Homework 4</h1>
+			<h2>Gross Pay</h2>
+			<nav><ul><li><a href="../HW4.html">COVERPAGE</a></li></ul></nav>
+		</header>
+		<div align= "center">
+			<form name="myform">
+				<h3>Enter Emploee pay information</h3>
+				<p id="nan1"></p>
+				<table border="1">
+					<tr>
+						<th>Employee #</th>
+						<th>Hours worked</th>
+						<th>Hourly rate</th>
+					</tr>
+					<tr>
+						<th>Emploee 1 </th>
+						<td><input type="text" size="20" class="r" name="emp1hw" id="emp1hw"></td>
+						<td><input type="text" size="20" class="r" name="emp1hr" id="emp1hr"></td>
+					</tr>
+					<tr>
+						<th>Emploee 2 </th>
+						<td><input type="text" size="20" class="r" name="emp2hw" id="emp2hw"></td>
+						<td><input type="text" size="20" class="r" name="emp2hr" id="emp2hr"></td>
+					</tr>
+					<tr>
+						<th>Emploee 3 </th>
+						<td><input type="text" size="20" class="r" name="emp3hw" id="emp3hw"></td>
+						<td><input type="text" size="20" class="r" name="emp3hr" id="emp3hr"></td>
+					</tr>
+					<tr>
+						<th>Emploee 4 </th>
+						<td><input type="text" size="20" class="r" name="emp4hw" id="emp4hw"></td>
+						<td><input type="text" size="20" class="r" name="emp4hr" id="emp4hr"></td>
+					</tr>
+					<tr>
+						<th>Emploee 5 </th>
+						<td><input type="text" size="20" class="r" name="emp5hw" id="emp5hw"></td>
+						<td><input type="text" size="20" class="r" name="emp5hr" id="emp5hr"></td>
+					</tr>
+					<tr>
+						<th>Emploee 6 </th>
+						<td><input type="text" size="20" class="r" name="emp6hw" id="emp6hw"></td>
+						<td><input type="text" size="20" class="r" name="emp6hr" id="emp6hr"></td>
+					</tr>
+				</table>
+				<br><input type="button" value='Calculate' onclick="process()">
+				<input type="reset" value="Reset" size="10">
+				<p id="nan2"></p>
+				<br><br>
+				<table border="1">
+					<tr>
+						<th>Employee #</th>
+						<th>Hours worked</th>
+						<th>Hourly rate</th>
+						<th>Gross Pay</th>
+					</tr>
+					<tr>
+						<th>Emploee 1 </th>
+						<td><input type="text" size="20" class="r" name="emp1hwo" id="emp1hwo"></td>
+						<td><input type="text" size="20" class="r" name="emp1hro" id="emp1hro"></td>
+						<td><input type="text" size="20" class="r" name="emp1gp" id="emp1gp"></td>
+					</tr>
+					<tr>
+						<th>Emploee 2 </th>
+						<td><input type="text" size="20" class="r" name="emp2hwo" id="emp2hwo"></td>
+						<td><input type="text" size="20" class="r" name="emp2hro" id="emp2hro"></td>
+						<td><input type="text" size="20" class="r" name="emp2gp" id="emp2gp"></td>
+					</tr>
+					<tr>
+						<th>Emploee 3 </th>
+						<td><input type="text" size="20" class="r" name="emp3hwo" id="emp3hwo"></td>
+						<td><input type="text" size="20" class="r" name="emp3hro" id="emp3hro"></td>
+						<td><input type="text" size="20" class="r" name="emp3gp" id="emp3gp"></td>
+					</tr>
+					<tr>
+						<th>Emploee 4 </th>
+						<td><input type="text" size="20" class="r" name="emp4hwo" id="emp4hwo"></td>
+						<td><input type="text" size="20" class="r" name="emp4hro" id="emp4hro"></td>
+						<td><input type="text" size="20" class="r" name="emp4gp" id="emp4gp"></td>
+					</tr>
+					<tr>
+						<th>Emploee 5 </th>
+						<td><input type="text" size="20" class="r" name="emp5hwo" id="emp5hwo"></td>
+						<td><input type="text" size="20" class="r" name="emp5hro" id="emp5hro"></td>
+						<td><input type="text" size="20" class="r" name="emp5gp" id="emp5gp"></td>
+					</tr>
+					<tr>
+						<th>Emploee 6 </th>
+						<td><input type="text" size="20" class="r" name="emp6hwo" id="emp6hwo"></td>
+						<td><input type="text" size="20" class="r" name="emp6hro" id="emp6hro"></td>
+						<td><input type="text" size="20" class="r" name="emp6gp" id="emp6gp"></td>
+					</tr>
+				</table>
+			</form>
+		</div>	
+	</body>
+	<footer>
+		<a href="http://facebook.com/jared.stevens.31"> <img class="social-icon" src="../img/facebook-wrap.png" alt=" facebook logo"> </a>
+		<a href="http://twitter.com/jwookie55"> <img class="social-icon" src="../img/twitter-wrap.png" alt="twitter logo"> </a>
+		<a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fhills.ccsf.edu%2F~jsteve19%2Fcnit133%2Fparts%2Fpart3.html"> <img class="social-icon" src="../img/html5.png" alt="validator html5"></a>
+		<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fhills.ccsf.edu%2F~jsteve19%2Fcnit133%2Fparts%2Fpart3.html&profile=css3&usermedium=all&warning=1&vextwarning=&lang=en"> <img class="social-icon" src="../img/css.png" alt="validator css"></a>
+		<p>&copy; 2014 Jared Stevens.</p>
+		</footer>
+</html>

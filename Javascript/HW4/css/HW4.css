@@ -1,0 +1,70 @@
+/**************
+HW pages
+**************/
+
+#show{
+	display: none;
+	padding: 15px;
+}
+
+#hw2link a{
+	color: #000000
+}
+#under h1, h2{
+		margin: 15px 0;
+		text-align: center;
+		color: #26FF5C
+}
+#construction{
+	background: #0086B3;
+}
+	
+#construction nav ul{
+	margin: 20px 0;
+	list-style: none;
+	text-align: center;
+	color: #000000;
+}
+
+section ul li{ 
+	font-size: larger;
+}
+
+input.r{
+	text-align: right;
+}
+
+input.c{
+	text-align: center;
+}
+
+#draggable {
+	display: inline-block;
+	width: 150px; 
+	height: 75px; 
+	padding: 0.5em; 
+}
+
+div h1{
+	color: #0F0F1E;
+}
+
+div h2{
+	color: #424251;
+	font-family: 'Niconne', sans-serif;
+	font-size: 40px;
+}
+
+#ani{
+	background: url('../img/snow.jpg');
+	height:100px;
+	width:100px;
+	position:absolute; 
+	z-index: -1;
+	margin: 0 10% 0 10%;
+}
+
+.error{
+	color: #FFFFF2;
+	background-color: #d90000;
+}

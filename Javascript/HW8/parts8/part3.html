@@ -1,0 +1,60 @@
+<!doctype HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CNIT 133 Homework 7</title>
+		<link rel="stylesheet" href="../css/normalize.css">
+		<link href='http://fonts.googleapis.com/css?family=Niconne|Open+Sans' rel='stylesheet' type='text/css'>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../css/HW8.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script>
+			function getVote(int) {
+			  if (window.XMLHttpRequest) {
+				xmlhttp=new XMLHttpRequest();
+			  } else {  
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			  xmlhttp.onreadystatechange=function() {
+				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				  document.getElementById("results").innerHTML=xmlhttp.responseText;
+				}
+			  }
+			  xmlhttp.open("GET","poll.php?vote="+int,true);
+			  xmlhttp.send();
+			}
+		</script>
+		<script>
+			$(function() {
+				$( "#datepicker" ).datepicker();
+			  });
+		</script>
+	</head>
+	<body id="construction">
+		<header id="under">
+			<h1>CNIT 133 Homework 8</h1>
+			<h2>Ajax requests</h2>
+			<nav>
+				<ul>
+					<li><a href="../HW8.html">HOMEPAGE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div id="poll">
+			<img src="../img/starwars1.jpg" width="300px" height="200px">
+			<h3>Are you excited for Star Wars?</h3>
+			<form id="pollForm">
+				<label for="yes">Yes:</label>
+				<input type="radio" name="vote, yes" value="0" onclick="getVote(this.value)">
+				<br><label for="no">No:</label>
+				<input type="radio" name="vote, no" value="1" onclick="getVote(this.value)">
+				<label for="date">Date:</label><input type="text" name="date" id="datepicker">
+			</form>
+		</div>
+		<br>
+		<div id="results"></div>
+	</body>
+</html>

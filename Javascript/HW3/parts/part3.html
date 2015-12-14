@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CNIT 133 HW3</title>
+		<link rel="stylesheet" href="../css/normalize.css">
+		<link href='http://fonts.googleapis.com/css?family=Niconne|Open+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../css/HW3.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="part3.js" async></script>
+		<script>
+			$(document).ready(function(){
+				$("#click").click(function(){
+					$("#results").css({
+						"color": "white",
+						"font-size": "large",
+						"font-weight": "bold",
+						"background-color": "#000000",
+						});
+				});
+			});
+		</script>
+	</head>
+	<body id="construction">
+		<header id="under">
+			<h1>CNIT 133 Homework 3</h1>
+			<h2>Credit limit calculation</h2>
+			<nav><ul><li><a href="../HW3.html">COVERPAGE</a></li></ul></nav>
+		</header>
+		<div align= "center">
+			<form name="myform">
+				<h3>Enter customer information</h3>
+				<p id="nan1"></p>
+				<table border="1">
+					<tr>
+						<th>Account number</th>
+						<td><input type="text" size="20" class="r" name="nm1" id="nm1"></td>
+					</tr>
+					<tr>
+						<th>Balance at beginning of month </th>
+						<td><input type="text" size="20" class="r" name="nm2" id="nm2"></td>
+					</tr>
+					<tr>
+						<th>Total of charged items this month</th>
+						<td><input type="text" size="20" class="r" name="nm3" id="nm3"></td>
+					</tr>
+					<tr>
+						<th>Total of credits this month</th>
+						<td><input type="text" size="20" class="r" name="nm4" id="nm4"></td>
+					</tr>
+					<tr>
+						<th>Allowed credit limit</th>
+						<td><input type="text" size="20" class="r" name="nm5" id="nm5"></td>
+					</tr>
+				</table>
+				<br><input type="button" value='Calculate' onclick="process()">
+				<input type="reset" value="Reset" size="10">
+				<p id="nan2"></p>
+				<br><br>
+				<h3>Customer credit information</h3>
+				<br>
+				<input type="button" id="click" value="Change results display">
+				<br>
+				<textarea rows="7" cols="45" id="results"></textarea>
+			</form>
+		</div>	
+	</body>
+	<footer>
+		<a href="http://facebook.com/jared.stevens.31"> <img class="social-icon" src="../img/facebook-wrap.png" alt=" facebook logo"> </a>
+		<a href="http://twitter.com/jwookie55"> <img class="social-icon" src="../img/twitter-wrap.png" alt="twitter logo"> </a>
+		<a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fhills.ccsf.edu%2F~jsteve19%2Fcnit133%2Fparts%2Fpart3.html"> <img class="social-icon" src="../img/html5.png" alt="validator html5"></a>
+		<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fhills.ccsf.edu%2F~jsteve19%2Fcnit133%2Fparts%2Fpart3.html&profile=css3&usermedium=all&warning=1&vextwarning=&lang=en"> <img class="social-icon" src="../img/css.png" alt="validator css"></a>
+		<p>&copy; 2014 Jared Stevens.</p>
+		</footer>
+</html>

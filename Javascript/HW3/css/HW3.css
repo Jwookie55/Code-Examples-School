@@ -1,0 +1,62 @@
+/**************
+HW pages
+**************/
+
+#show{
+	display: none;
+	padding: 15px;
+}
+
+#hw2link a{
+	color: #000000
+}
+#under h1, h2{
+		margin: 15px 0;
+		text-align: center;
+		color: #26FF5C
+}
+#construction{
+	background: #0086B3;
+}
+	
+#construction nav ul{
+	margin: 20px 0;
+	list-style: none;
+	text-align: center;
+	color: #000000;
+}
+
+section ul li{ 
+	font-size: larger;
+}
+
+input.r{
+	text-align: right;
+}
+
+#results{
+	border: 2px solid black;
+}
+
+#equate{
+	color: orange;
+	font-size: 150%;
+}
+
+p:before{
+	content:url(../img/css.png)
+}
+
+section li:first-letter{
+	font-size: large;
+	font-style: bold;
+	color: white;
+}
+
+section li:first-child{
+	background: #00ff00;
+}
+
+li:nth-of-type(4){
+	background-color: #ff0000;
+}

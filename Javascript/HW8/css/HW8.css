@@ -1,0 +1,51 @@
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+
+#pollForm label{
+	text-align: left;
+}
+
+#pollForm input{
+	float: right;
+}
+input {
+  display: inline-block;
+  float: left;
+}
+
+#poll{
+	text-align: center;
+	margin: 0 auto;
+	width: 300px;
+}
+
+#results{
+	margin: 0 auto;
+}
+
+#results table td{
+	width: 200px;
+	background-color: white;
+	text-align: center;
+}
+
+#results table{
+	border: 1px solid black;
+}
+
+#results table img{
+	float: left;
+}
+
+#reset{
+	clear: left;
+	margin-left: 320px;
+}
+
+
+ 

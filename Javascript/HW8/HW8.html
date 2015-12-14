@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CNIT 133 Homework 8</title>
+		<link rel="stylesheet" href="css/normalize.css">
+		<link href='http://fonts.googleapis.com/css?family=Niconne|Open+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/HW7.css">
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script>
+        $(document).ready(function () {
+            $('.answer').hide();
+            $(".main h3").click(function () {
+                var h3 = $(this);
+                var answer = h3.next(".answer");
+
+                if (answer.css("display") == "none") {
+                    answer.slideDown();
+                } else {
+                    answer.fadeOut();
+                }
+            });
+        }); 
+    </script>
+	</head>
+	<body id="construction">
+		<header id="under">
+			<h1>CNIT 133 Homework 8</h1>
+			<h2>Ajax functions</h2>
+			<nav>
+				<ul>
+					<li><a href="index.html">HOMEPAGE</a></li>
+				</ul>
+			</nav>
+		</header>
+			<section>
+				<div class="main">
+					<h3>PART 1</h3>
+						<div class="answer">
+							<p>GetHint W3shools recreation</p>
+							<a href="parts8/part1.html">Part 1 go</a>
+						</div>
+					<h3>PART 2</h3>
+						<div class="answer">
+							<p>Ajax time and date request</p>
+							<a href="parts8/part2.html">Part 2 go</a>
+						</div>
+					<h3>PART 3</h3>
+						<div class="answer">
+							<p>Ajax and PHP poll with date</p>
+							<a href="parts8/part3.html">Part 3 go</a>
+						</div>
+					<h3>PART 4</h3>
+						<div class="answer">
+							<p>PHP powered state infographic</p>
+							<a href="parts8/part4.html">PART 4 go</a>
+						</div>
+				</div>
+			</section>
+		<footer>
+		<a href="http://facebook.com/jared.stevens.31"> <img class="social-icon" src="img/facebook-wrap.png" alt=" facebook logo"> </a>
+		<a href="http://twitter.com/jwookie55"> <img class="social-icon" src="img/twitter-wrap.png" alt="twitter logo"> </a>
+		<a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fhills.ccsf.edu%2F~jsteve19%2Fcnit133%2FHW3.html"> <img class="social-icon" src="img/html5.png" alt="validator html5"></a>
+		<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fhills.ccsf.edu%2F~jsteve19%2Fcnit133%2FHW3.html&profile=css3&usermedium=all&warning=1&vextwarning=&lang=en"> <img class="social-icon" src="img/css.png" alt="validator css"></a>
+		<p>&copy; 2014 Jared Stevens.</p>
+		</footer>
+	</body>
+</html>

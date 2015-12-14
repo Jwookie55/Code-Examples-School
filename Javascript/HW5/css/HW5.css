@@ -1,0 +1,11 @@
+table{
+	display: inline-block;
+}
+
+.error{
+	color: red;
+}
+
+h2{
+	color: #0af;
+}

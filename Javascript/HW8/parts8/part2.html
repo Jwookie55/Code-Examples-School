@@ -1,0 +1,84 @@
+<!doctype HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CNIT 133 Homework 7</title>
+		<link rel="stylesheet" href="../css/normalize.css">
+		<link href='http://fonts.googleapis.com/css?family=Niconne|Open+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../css/HW8.css">
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script language="javascript" type="text/javascript">
+			function ajaxFunction(){
+				var ajaxRequest;  
+				var ajaxrequest2;
+				var ajaxrequest3;
+				
+				try{
+					ajaxRequest = new XMLHttpRequest();
+					ajaxRequest2 = new XMLHttpRequest();
+					ajaxRequest3 = new XMLHttpRequest();
+				} catch (e){
+					try{
+						ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+						ajaxRequest2 = new ActiveXObject("Msxml2.XMLHTTP");
+						ajaxRequest3 = new ActiveXObject("Msxml2.XMLHTTP");
+					} catch (e) {
+						try{
+							ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+							ajaxRequest2 = new ActiveXObject("Microsoft.XMLHTTP");
+							ajaxRequest3 = new ActiveXObject("Microsoft.XMLHTTP");
+						} catch (e){
+							alert("Your browser broke!");
+							return false;
+						}
+					}
+				}
+				ajaxRequest.onreadystatechange = function(){
+				if(ajaxRequest.readyState == 4){
+					document.myForm.time.value = ajaxRequest.responseText;
+				}
+				}
+				ajaxRequest.open("GET", "time.php", true);
+				ajaxRequest.send(null); 
+				
+				ajaxRequest2.onreadystatechange = function(){
+				if(ajaxRequest2.readyState == 4){
+					document.myForm.date1.value = ajaxRequest2.responseText;
+				}
+				}
+				ajaxRequest2.open("GET", "date1.php", true);
+				ajaxRequest2.send(null); 
+				
+				ajaxRequest3.onreadystatechange = function(){
+				if(ajaxRequest3.readyState == 4){
+					document.myForm.date2.value = ajaxRequest3.responseText;
+				}
+				}
+				ajaxRequest3.open("GET", "date2.php", true);
+				ajaxRequest3.send(null); 
+			}
+		</script>
+	</head>
+	<body id="construction">
+		<header id="under">
+			<h1>CNIT 133 Homework 8</h1>
+			<h2>Ajax requests</h2>
+			<nav>
+				<ul>
+					<li><a href="../HW8.html">HOMEPAGE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div class="main">
+		<p>Please enter your name to receive the date and time</p>
+			<form name="myForm">
+			<label>Name:</label><input type="text" name="username" size="35" onchange="ajaxFunction()"><br>
+			<label>Time:</label><input type="text" name="time" size="35"><br>
+			<label>Date1:</label><input type="text" name="date1" size="35"><br>
+			<label>Date2:</label><input type="text" name="date2" size="35">
+			</form>
+		</div>
+	</body>
+</html>
