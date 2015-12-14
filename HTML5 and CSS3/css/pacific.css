@@ -1,0 +1,155 @@
+/* --------------
+	DIV SSTYLING
+-----------------*/
+
+body{
+	background-color: white;
+	color: #313140;
+	background-image: url("../img/background.jpg");
+	background-repeat: repeat;
+	background-position: top left;	
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#wrapper{
+	width: 80%;
+	margin: 0 auto;
+	background-color: #90c7e3;
+	min-width: 960px;
+	box-shadow: 12px 12px #757584;
+}
+
+#footer{
+	font-size: 75%;
+	font-style: italic;
+	font-family: Georgia, "times new roman", times, serif;
+}
+
+#content{
+	margin: 0px 10px 10px 165px;
+	padding: 0px 0px 1px 0px;
+}
+
+/* -----------
+	HEADINGS
+--------------*/
+
+h1{
+	background-color: #000033;
+	color: white;
+	font-family: Georgia, "Times new roman", serif;
+	margin-bottom: 0;
+	background-image: url('../img/sunset.jpg');
+	background-position: right;
+	background-repeat: no-repeat;
+	padding-left: 10px;
+}
+
+h2{
+	color: #3399cc;
+	font-family: Georgia, "times new roman", serif;
+	text-shadow: 4px 2px #242415;
+}
+
+h3{
+	color: #000033;
+	font-family: Goergia, "times new roamn", serif;
+}
+
+/* -----------
+	NAVIGATION
+--------------*/
+
+#nav{
+	background-color: #90c7e3;
+	font-weight: bold;
+	float: left;
+	width: 150px;
+}
+
+#nav ul{
+	list-style: none;
+	font-size: 1.2em;
+	margin: 0;
+	padding-left: 0;
+}
+
+#nav ul a{
+	text-decoration: none;
+	color: #000033;
+}
+
+#nav ul a:visited{
+	color: #0059B3;
+}
+
+#nav ul a:hover{
+	color: #FDFDFF;
+}
+
+ul{
+	list-style-position: inside;
+	list-style-type: square;
+}
+
+/* ------------------
+	IMAGES/ANIMATIONS
+---------------------*/
+
+.leftimg{
+	float: left;
+	margin: 0 5px 5px opx;
+	height: 165px;
+	width: 255px;
+	padding-right: 10px;
+}
+
+@keyframes animation1 {
+	0% { margin-left: 0%; }
+	100% { margin-left: 40%;}
+}
+
+#flybird{
+	animation-direction: right;
+	animation-duration: 10s;
+	animation-iteration-count: 1;
+	animation-name: animation1;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+/*-----------
+	FORM
+-----------*/
+
+#content form{
+	text-align: center;
+}
+
+#content form label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+
+#content form input {
+  display: inline-block;
+  float: left;
+}
+
+/* ------------------
+	MISCELLANEOUS
+---------------------*/
+.resort{
+	color: #000033;
+	font-weight: bold;
+}
+
+
+#address{
+	font-size: 90%;
+}
+
+
